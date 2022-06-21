@@ -1,0 +1,11 @@
+ - Homepage
+ *  Will have a switch to change between Improved Property or Land Sale
+ -  Will contain three cards with different search parameters
+    - Location Details card
+    - Sales Details card
+    - Structure Details card or Additional Details card (depending on switch value)
+
+ - Results Page
+ -  Will include the query passed in a table at the top
+ -  Will have a table of results listed below
+ -  EVENTUALLY - Edit option for each record
