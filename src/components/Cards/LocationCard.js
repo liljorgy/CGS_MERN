@@ -72,16 +72,16 @@ const LocationCard = () => {
                 />
             <input
                 className={classes.text_input__width}
-                name="street"
-                placeholder="Street"
-                id="inputStreet"
-                /> <br />
-            <input
-                className={classes.text_input__width}
                 name="city"
                 placeholder="City"
                 id="inputCity"
                 /> <br />
+            <input
+                className={classes.text_input__width}
+                name="street"
+                placeholder="Street"
+                id="inputStreet"
+            /> <br />
         </div>
     )
 };

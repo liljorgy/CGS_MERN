@@ -9,3 +9,9 @@
  -  Will include the query passed in a table at the top
  -  Will have a table of results listed below
  -  EVENTUALLY - Edit option for each record
+
+
+- Send query details to a function
+-- Function runs the base query against the DB
+-- Apply query instructions against the base query
+---Send the results to the Results page

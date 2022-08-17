@@ -1,0 +1,42 @@
+.resultsTable {
+    width: 100%;
+    font-size: 16px;
+}
+
+.table_details {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 16px;
+}
+
+.table_num {
+    width: 2%;
+}
+
+.address {
+    width: 10%;
+}
+
+.city {
+    width: 10%;
+}
+
+.sale_date {
+    width: 5%;
+}
+
+.sale_price {
+    width: 10%;
+}
+.report_date {
+    width: 5%;
+}
+.structure_type {
+    width: 15%;
+}
+.size {
+    width: 10%;
+}
+.unit_price {
+    width: 15%;
+}
