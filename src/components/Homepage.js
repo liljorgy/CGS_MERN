@@ -1,11 +1,11 @@
 import React, {useState, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
-import SwitchButton from "./UI/SwitchButton";
-import LocationCard from "./Cards/LocationCard_Test";
+import LocationCard from "./OLD/LocationCard_Test";
 import SalesCard from "./Cards/SalesCard";
 import StructureCard from "./Cards/StructureCard";
 import DetailsCard from "./Cards/DetailsCard";
 import classes from './Cards/Cards.module.css'
+import ToggleSwitch from "./UI/ToggleSwitch";
 
 const Homepage = () => {
     // Setting query type based on switch selected
@@ -18,10 +18,15 @@ const Homepage = () => {
     };
 
     // Flipping the query type passed to switchSelector
-    const switchQueryType = (event) => {
-        event.preventDefault()
-        if (queryType === 'improved') { setQueryType('land') }
-        else { setQueryType('improved') }
+    //const switchQueryType = (event) => {
+    const switchQueryType = () => {
+        //event.preventDefault()
+        if (queryType === 'improved') {
+            setQueryType('land')
+        }
+        else {
+            setQueryType('improved')
+        }
     };
 
     const submitHandler = (event) => {
@@ -41,6 +46,9 @@ const Homepage = () => {
             else if (queryKey.toString() === 'street') {
                 preFilter = [...preFilter, queryParameters[x]]
             }
+            else if (queryKey.toString() === 'counties' && queryParameters[x].counties.length > 0) {
+                preFilter = [...preFilter, queryParameters[x]]
+            }
         }
         toResults(preFilter);
     };
@@ -55,7 +63,7 @@ const Homepage = () => {
 
     return (
         <div>
-            <SwitchButton switchQuery={switchQueryType}/>
+            <ToggleSwitch switchQuery={switchQueryType}/>
             <div className={classes.searchPanes_row}>
                 <LocationCard ref={locationDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>
                 <SalesCard/>

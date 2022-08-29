@@ -9,6 +9,7 @@ const Results = () => {
     let location = useLocation();
     const filterNumber = location.state.filter.length
     var queryDict = {}
+    // queryDict builds the props for the Location Query card
     location.state.filter.forEach(query => {
         for (let key in query) {
             queryDict[`${key}`] = `${query[key]}`
@@ -57,38 +58,44 @@ const Results = () => {
             })
     };
 
+    const filterFunction = (startArray, counter) => {
+        var tempArray = []
+        startArray.map((result, key) => {
+            var tempHistory
+            {counter === 0 ? tempHistory = result.report_history :  tempHistory = result.history}
+            if (preFilterDict.state === result.location.state) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.city === result.location.city) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.street) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.counties && preFilterDict.counties.includes(result.location.county)) {
+                tempArray.push({location: result.location, history: tempHistory})
+            }
+        })
+        return tempArray
+    }
     // Filter the comps array into compsData array
     var myArray = []
     if (comps.length > 0) {
         var filterCounter = 0;
-        while (filterCounter != filterNumber) {
+        while (filterCounter !== filterNumber) {
             var preFilterDict = location.state.filter[filterCounter] // This is the filter key/value pair
+            if (preFilterDict.counties && preFilterDict.counties.length === 0) {
+                preFilterDict = location.state.filter[filterCounter + 1]
+            }
             if (filterCounter === 0) {
-                comps.map((result, key) => {
-                    if (preFilterDict.state === result.location.state) {
-                        myArray.push({location: result.location, history: result.report_history})
-                    } else if (preFilterDict.city === result.location.city) {
-                        myArray.push({location: result.location, history: result.report_history})
-                    }
-                })
+                myArray = filterFunction(comps, filterCounter)
             }
             else {
-                var newMyArray = []
-                myArray.map((result, key) => {
-                    if (preFilterDict.state === result.location.state) {
-                        newMyArray.push({location: result.location, history: result.history})
-                    } else if (preFilterDict.city === result.location.city) {
-                        newMyArray.push({location: result.location, history: result.history})
-                    }
-                })
-                myArray = newMyArray
+                myArray = filterFunction(myArray, filterCounter)
             }
             filterCounter += 1
         }
-    };
-
+    }
 
     if (myArray.length > 0) {
+        console.log(myArray);
         // Define the date format options for parsing the DB data
         var formatOptions = {
             day: '2-digit',

@@ -1,0 +1,31 @@
+.inline_text {
+  display: flex;
+  position: relative;
+  left: 43px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.switch {
+  position: relative;
+  top: 2px;
+}
+
+.not_selected {
+  position: relative;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.selected {
+  position: relative;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: #61dafb;
+  border: 1px solid green;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
