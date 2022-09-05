@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import SwitchButton from "../UI/SwitchButton";
-import LocationCard from "../Cards/LocationCard";
+import LocationCard from "./LocationCard";
 import SalesCard from "../Cards/SalesCard";
 import StructureCard from "../Cards/StructureCard";
 import DetailsCard from "../Cards/DetailsCard";

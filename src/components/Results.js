@@ -4,6 +4,9 @@ import { useLocation} from "react-router-dom";
 import {DataTable, Spinner} from 'grommet';
 import HeaderBar from "./UI/HeaderBar";
 import LocationQuery from "./Cards/LocationQuery";
+import SalesQuery from "./Cards/SalesQuery";
+import StructureQuery from "./Cards/StructureQuery";
+import classes from './Cards/Cards.module.css';
 
 const Results = () => {
     let location = useLocation();
@@ -71,8 +74,23 @@ const Results = () => {
                 tempArray.push({location: result.location, history: tempHistory})
             } else if (preFilterDict.counties && preFilterDict.counties.includes(result.location.county)) {
                 tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.salePriceLow <= tempHistory[0].sale_price) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.salePriceHigh >= tempHistory[0].sale_price) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.saleDateLow <= tempHistory[0].sale_date) {
+                tempArray.push({location: result.location ,history: tempHistory})
+            } else if (preFilterDict.saleDateHigh >= tempHistory[0].sale_date) {
+                tempArray.push({location: result.location ,history: tempHistory})
+            } else if (preFilterDict.structureType === tempHistory[0].structure_type) {
+                tempArray.push({location: result.location, history: tempHistory})
+            } else if (preFilterDict.sizeLow >= tempHistory[0].size_numeric) {
+                tempArray.push({location: result.location ,history: tempHistory})
+            } else if (preFilterDict.sizeHigh <= tempHistory[0].size_numeric) {
+                tempArray.push({location: result.location ,history: tempHistory})
             }
         })
+        console.log(tempArray)
         return tempArray
     }
     // Filter the comps array into compsData array
@@ -143,7 +161,11 @@ const Results = () => {
     return (
         <div>
             <HeaderBar />
-            <LocationQuery location={queryDict}/>
+            <div className={classes.searchPanes_row}>
+                <LocationQuery location={queryDict}/>
+                <SalesQuery sales={queryDict}/>
+                <StructureQuery structure={queryDict}/>
+            </div>
             <section>
                 {content}
             </section>

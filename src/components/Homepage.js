@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
-import LocationCard from "./OLD/LocationCard_Test";
+import LocationCard from "./Cards/LocationCard";
 import SalesCard from "./Cards/SalesCard";
 import StructureCard from "./Cards/StructureCard";
 import DetailsCard from "./Cards/DetailsCard";
@@ -12,6 +12,9 @@ const Homepage = () => {
     const [queryType, setQueryType] = useState('improved');
 
     const locationDetailsHandler = useRef();
+    const salesDetailsHandler = useRef();
+    const structureDetailsHandler = useRef();
+    const detailsDetailsHandler = useRef();
     let queryParameters = []
     const handleQueryParameters = (queryParameter) => {
         queryParameters = [...queryParameters, queryParameter]
@@ -29,11 +32,21 @@ const Homepage = () => {
         }
     };
 
+    const formatDate = (dateValue) => {
+        const tempYear = dateValue.substring(0,4)
+        const tempMonth = dateValue.substring(5,7)
+        const tempDay = dateValue.substring(8,10)
+        const tempDate = new Date(tempYear, tempMonth -1, tempDay).toISOString()
+        return tempDate
+    };
+
     const submitHandler = (event) => {
         // create filter
         queryParameters = [];
         var preFilter = [];
         locationDetailsHandler.current.setQueryParameters(event);
+        salesDetailsHandler.current.setSalesQueryParameters(event);
+        queryType === 'improved' ? structureDetailsHandler.current.setStructureQueryParameters(event) : detailsDetailsHandler.current.setDetailsQueryParameters(event)
         console.log('Submit Handler: ', queryParameters);
         for (var x in queryParameters) {
             var queryKey = Object.keys(queryParameters[x]);
@@ -48,6 +61,35 @@ const Homepage = () => {
             }
             else if (queryKey.toString() === 'counties' && queryParameters[x].counties.length > 0) {
                 preFilter = [...preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'salePriceLow') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'salePriceHigh') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'saleDateLow') {
+                const fmtDate = formatDate(queryParameters[x].saleDateLow)
+                preFilter = [... preFilter, {saleDateLow: fmtDate}]
+            }
+            else if (queryKey.toString() === 'saleDateHigh') {
+                const fmtDate = formatDate(queryParameters[x].saleDateHigh)
+                preFilter = [... preFilter, {saleDateHigh: fmtDate}]
+            }
+            else if (queryKey.toString() === 'structureType') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'sizeLow') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'sizeHigh') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'unitPriceLow') {
+                preFilter = [... preFilter, queryParameters[x]]
+            }
+            else if (queryKey.toString() === 'unitPriceHigh') {
+                preFilter = [... preFilter, queryParameters[x]]
             }
         }
         toResults(preFilter);
@@ -66,9 +108,9 @@ const Homepage = () => {
             <ToggleSwitch switchQuery={switchQueryType}/>
             <div className={classes.searchPanes_row}>
                 <LocationCard ref={locationDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>
-                <SalesCard/>
-                {(queryType === 'improved') && <StructureCard />}
-                {(queryType === 'land') && <DetailsCard />}
+                <SalesCard ref={salesDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>
+                {(queryType === 'improved') && <StructureCard ref={structureDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
+                {(queryType === 'land') && <DetailsCard ref={detailsDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
             </div>
             <form onSubmit={submitHandler}>
                 <button type="submit" id="querySubmit">Run Query</button>
