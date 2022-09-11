@@ -1,5 +1,6 @@
 import React, {forwardRef, useImperativeHandle} from 'react';
 import classes from './Cards.module.css';
+import {TextInput} from 'grommet';
 
 const DetailsCard = forwardRef((props, ref) => {
 
@@ -30,30 +31,30 @@ const DetailsCard = forwardRef((props, ref) => {
     return (
         <div className={classes.card}>
             <h3>Property Details</h3>
-            <input name="utilities"
+            <TextInput
                    id="utilities"
-                    placeholder="Utilities"
-                    className={classes.text_input__width}/><br/>
-            <input name="highestAndBest"
+                   placeholder="Utilities"
+                   size="small"/>
+            <TextInput
                    id="highestAndBest"
                    placeholder="Highest and Best Use"
-                   className={classes.text_input__width}/><br/>
-            <input name="landAreaLow"
+                   size="small"/>
+            <TextInput
                    id="landAreaLow"
                    placeholder="Land Area - Low"
-                   className={classes.text_input__width}/><br/>
-            <input name="landAreaHigh"
+                   size="small" />
+            <TextInput
                    id="landAreaHigh"
                    placeholder="Land Area - High"
-                   className={classes.text_input__width}/><br/>
-            <input name="unitPriceLow"
+                   size="small"/>
+            <TextInput
                    id="unitPriceLow"
                    placeholder="Unit Price - Low"
-                   className={classes.text_input__width}/><br/>
-            <input name="unitPriceHigh"
+                   size="small"/>
+            <TextInput
                    id="unitPriceHigh"
                    placeholder="Unit Price - High"
-                   className={classes.text_input__width}/><br/>
+                   size="small"/>
         </div>
     );
 });

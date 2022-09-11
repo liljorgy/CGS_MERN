@@ -1,5 +1,6 @@
 import React, {forwardRef, useImperativeHandle} from 'react';
 import classes from './Cards.module.css';
+import {TextInput} from 'grommet';
 
 const StructureCard = forwardRef((props, ref) => {
 
@@ -27,31 +28,31 @@ const StructureCard = forwardRef((props, ref) => {
     return (
         <div className={classes.card}>
             <h3>Structure Details</h3>
-            &nbsp;&nbsp;<input
+            <TextInput
+                size="small"
                 name="structureType"
                 id="structureType"
-                className={classes.text_input__width}
-                placeholder="Structure Type"/> <br/>
-            &nbsp;&nbsp;<input
+                placeholder="Structure Type"/>
+            <TextInput
+                size="small"
                 name="sizeLow"
                 id="sizeLow"
-                className={classes.text_input__width}
-                placeholder="Size - Low" /> <br/>
-            &nbsp;&nbsp;<input
+                placeholder="Size - Low" />
+            <TextInput
+                size="small"
                 name="sizeHigh"
                 id="sizeHigh"
-                className={classes.text_input__width}
-                placeholder="Size - High" /> <br/>
-            $<input
+                placeholder="Size - High" />
+            <TextInput
+                size="small"
                 name="unitPriceLow"
                 id="unitPriceLow"
-                className={classes.text_input__width}
-                placeholder="Price per Unit - Low" /> <br/>
-            $<input
+                placeholder="Price per Unit - Low" />
+            <TextInput
+                size="small"
                 name="unitPriceHigh"
                 id="unitPriceHigh"
-                className={classes.text_input__width}
-                placeholder="Price per Unit - High" /> <br/>
+                placeholder="Price per Unit - High" />
         </div>
     );
 });

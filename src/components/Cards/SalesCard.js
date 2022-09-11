@@ -1,5 +1,6 @@
 import React, {forwardRef, useImperativeHandle} from 'react';
 import classes from './Cards.module.css'
+import {DateInput, TextInput} from 'grommet';
 
 
 const SalesCard = forwardRef((props, ref) => {
@@ -22,31 +23,34 @@ const SalesCard = forwardRef((props, ref) => {
         }
     }));
 
+
     return (
            <div className={classes.card}>
                <h3>Sale Details</h3>
-               $<input
+               <TextInput
                     name="salePriceLow"
                     id="salePriceLow"
-                    className={classes.text_input__width}
-                    placeholder="Sale Price - Low"/><br/>
-               $<input
-                    name="salePriceHigh"
-                    id="salePriceHigh"
-                    className={classes.text_input__width}
-                    placeholder="Sale Price - High"/><br/>
-               &nbsp;&nbsp;<input
+                    placeholder="Sale Price - Low"
+                    size="small"
+                    />
+               <TextInput
+                   name="salePriceHigh"
+                   id="salePriceHigh"
+                   placeholder="Sale Price - High"
+                   size="small"
+                   />
+               <TextInput
                     name="saleDateLow"
                     id="saleDateLow"
-                    className={classes.text_input__width}
                     type="date"
-                    placeholder="Sale Date - Low"/><br/>
-               &nbsp;&nbsp;<input
+                    placeholder="Sale Date - Low"
+                    />
+               <TextInput
                     name="saleDateHigh"
                     id="saleDateHigh"
-                    className={classes.text_input__width}
                     type="date"
-                    placeholder="Sale Date - High"/><br/>
+                    placeholder="Sale Date - High"
+                    />
            </div>
     );
 });

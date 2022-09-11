@@ -10,6 +10,7 @@ import texasCounties from "./Counties/texasCounties";
 import westVirginiaCounties from "./Counties/westVirginiaCounties";
 import classes from './Cards.module.css';
 import {Multiselect} from "multiselect-react-dropdown";
+import {TextInput} from 'grommet';
 
 const LocationCard = forwardRef((props, ref) => {
     const [countyOptions, setCountyOptions] = useState([]);
@@ -49,64 +50,74 @@ const LocationCard = forwardRef((props, ref) => {
     }));
 
     const stateCountyLink = (selectedState) => {
-        if (selectedState.target.value === '') {
+        var stateInput = selectedState[0].name
+        if (stateInput === '') {
             setCountyOptions([]);
         }
-        else if (selectedState.target.value === 'Indiana') {
+        else if (stateInput === 'Indiana') {
             setCountyOptions(indianaCounties)
             setStateSelected('Indiana')
         }
-        else if (selectedState.target.value === 'Kentucky') {
+        else if (stateInput === 'Kentucky') {
             setCountyOptions(kentuckyCounties)
             setStateSelected('Kentucky')
         }
-        else if (selectedState.target.value === 'Maryland') {
+        else if (stateInput === 'Maryland') {
             setCountyOptions(marylandCounties)
             setStateSelected('Maryland')
         }
-        else if (selectedState.target.value === 'Michigan') {
+        else if (stateInput === 'Michigan') {
             setCountyOptions(michiganCounties)
             setStateSelected('Michigan')
         }
-        else if (selectedState.target.value === 'Ohio') {
+        else if (stateInput === 'Ohio') {
             setCountyOptions(ohioCounties)
             setStateSelected('Ohio')
         }
-        else if (selectedState.target.value === 'Pennsylvania') {
+        else if (stateInput=== 'Pennsylvania') {
             setCountyOptions(pennsylvaniaCounties)
             setStateSelected('Pennsylvania')
         }
-        else if (selectedState.target.value === 'South Carolina') {
+        else if (stateInput === 'South Carolina') {
             setCountyOptions(southCarolinaCounties)
             setStateSelected('South Carolina')
         }
-        else if (selectedState.target.value === 'Texas') {
+        else if (stateInput === 'Texas') {
             setCountyOptions(texasCounties)
             setStateSelected('Texas')
         }
-        else if (selectedState.target.value === 'West Virginia') {
+        else if (stateInput === 'West Virginia') {
             setCountyOptions(westVirginiaCounties)
             setStateSelected('West Virginia')
         };
     };
+    const statesOptions = {
+        options: [
+            {name: 'Ohio', id: 1},
+            {name: 'West Virginia', id: 2},
+            {name: 'Pennsylvania', id: 3},
+            {name: 'Indiana', id: 4},
+            {name: 'Kentucky', id: 5},
+            {name: 'Maryland', id: 6},
+            {name: 'Michigan', id: 7},
+            {name: 'South Carolina', id: 8},
+            {name: 'Texas', id: 9},
+        ]
+    }
 
     return (
         <div className={classes.card}>
             <h3>Location Details</h3>
-            <select className={classes.searchPanes_dropdown} onChange={stateCountyLink}>
-                <option value="">--Select State--</option>
-                <option value="Ohio">Ohio</option>
-                <option value="West Virginia">West Virginia</option>
-                <option value="Pennsylvania">Pennsylvania</option>
-                <option value="Indiana">Indiana</option>
-                <option value="Kentucky">Kentucky</option>
-                <option value="Maryland">Maryland</option>
-                <option value="Michigan">Michigan</option>
-                <option value="South Carolina">South Carolina</option>
-                <option value="Texas">Texas</option>
-            </select>
             <Multiselect
-                placeholder="--Select County"
+                placeholder="--Select State --"
+                options={statesOptions.options}
+                displayValue="name"
+                avoidHighlightFirstOption="true"
+                onSelect={stateCountyLink}
+                singleSelect={true}
+                />
+            <Multiselect
+                placeholder="--Select County--"
                 options={countyOptions.options}
                 displayValue="name"
                 emptyRecordMsg="Select a state"
@@ -115,20 +126,33 @@ const LocationCard = forwardRef((props, ref) => {
                 onSelect={addCounty}
                 onRemove={removeCounty}
                 />
-            <input
-                className={classes.text_input__width}
+            <br/>
+            <TextInput
                 name="city"
                 placeholder="City"
                 id="inputCity"
-                /> <br />
-            <input
-                className={classes.text_input__width}
+                size="Small"
+                />
+            <TextInput
                 name="street"
                 placeholder="Street"
                 id="inputStreet"
-            /> <br />
+                size="Small"
+                />
         </div>
     )
 });
 
 export default LocationCard;
+//<input
+//    className={classes.text_input__width}
+//    name="city"
+//    placeholder="City"
+//    id="inputCity"
+///> <br /><br/>
+//<input
+//    className={classes.text_input__width}
+//    name="street"
+//    placeholder="Street"
+//    id="inputStreet"
+///> <br />

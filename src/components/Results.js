@@ -1,7 +1,7 @@
 import React, {useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation} from "react-router-dom";
-import {DataTable, Spinner} from 'grommet';
+import {DataTable, Heading, Spinner} from 'grommet';
 import HeaderBar from "./UI/HeaderBar";
 import LocationQuery from "./Cards/LocationQuery";
 import SalesQuery from "./Cards/SalesQuery";
@@ -47,18 +47,20 @@ const Results = () => {
     },[fetchDataHandler]);
 
     const formatForTable = (myKey, rslt, date1, date2) => {
+        for (var i = 0; i < rslt.history.length; i++) {
             comps_counter += 1
             compsData.push({
                 id: myKey,
                 address: rslt.location.street,
                 city: rslt.location.city,
                 saleDate: date1,
-                salePrice: '$' + rslt.history[0].sale_price.toLocaleString('en-US'),
+                salePrice: '$' + rslt.history[i].sale_price.toLocaleString('en-US'),
                 reportDate: date2,
-                structureType: rslt.history[0].structure_type,
-                unitPrice: '$' + rslt.history[0].unit_price.toFixed(2),
-                filename: rslt.history[0].report_attributed_to
+                structureType: rslt.history[i].structure_type,
+                unitPrice: '$' + rslt.history[i].unit_price.toFixed(2),
+                filename: rslt.history[i].report_attributed_to
             })
+        }
     };
 
     const filterFunction = (startArray, counter) => {
@@ -70,7 +72,7 @@ const Results = () => {
                 tempArray.push({location: result.location, history: tempHistory})
             } else if (preFilterDict.city === result.location.city) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.street) {
+            } else if (result.location.street.includes(preFilterDict.street)) {
                 tempArray.push({location: result.location, history: tempHistory})
             } else if (preFilterDict.counties && preFilterDict.counties.includes(result.location.county)) {
                 tempArray.push({location: result.location, history: tempHistory})
@@ -90,7 +92,6 @@ const Results = () => {
                 tempArray.push({location: result.location ,history: tempHistory})
             }
         })
-        console.log(tempArray)
         return tempArray
     }
     // Filter the comps array into compsData array
@@ -112,8 +113,8 @@ const Results = () => {
         }
     }
 
+    // This part creates the final table prepped data
     if (myArray.length > 0) {
-        console.log(myArray);
         // Define the date format options for parsing the DB data
         var formatOptions = {
             day: '2-digit',
@@ -121,10 +122,13 @@ const Results = () => {
             year: '2-digit'
         };
         myArray.map((result, key) => {
-            var tempSaleDate = new Date(result.history[0].sale_date)
-                .toLocaleDateString('en-US',formatOptions);
-            var tempReportDate = new Date(result.history[0].report_written_date)
-                .toLocaleDateString('en-US',formatOptions);
+            console.log(result.history[0].sale_date.substring(0,10))
+            var tempSaleDate = result.history[0].sale_date.substring(0,10)
+            var tempReportDate = result.history[0].report_written_date.substring(0,10)
+            //var tempSaleDate = new Date(result.history[0].sale_date)
+            //    .toLocaleDateString('en-US', formatOptions);
+            //var tempReportDate = new Date(result.history[0].report_written_date)
+            //    .toLocaleDateString('en-US',formatOptions);
 
             // Define the DataTable column details
             const columnsDefault = [
@@ -141,9 +145,10 @@ const Results = () => {
         content = <div>
             <p>Number of records found: {comps_counter}</p>
             <DataTable
-            columns={columnsDefault}
-            data={compsData}
-            paginate={true}
+                columns={columnsDefault}
+                data={compsData}
+                paginate={true}
+                sort={{ property: 'saleDate', direction: "asc" }}
             />
             </div>
             return ;

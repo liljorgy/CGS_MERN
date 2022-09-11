@@ -6,6 +6,7 @@ import StructureCard from "./Cards/StructureCard";
 import DetailsCard from "./Cards/DetailsCard";
 import classes from './Cards/Cards.module.css'
 import ToggleSwitch from "./UI/ToggleSwitch";
+import {Button} from 'grommet';
 
 const Homepage = () => {
     // Setting query type based on switch selected
@@ -98,7 +99,7 @@ const Homepage = () => {
     // Redirect onSubmit to results page
     const navigate = useNavigate();
     const toResults = (filter) => {
-        console.log('To Results: ', filter);
+        //console.log('To Results: ', filter);
         navigate('/results', {state: {filter}});
     };
 
@@ -113,7 +114,11 @@ const Homepage = () => {
                 {(queryType === 'land') && <DetailsCard ref={detailsDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
             </div>
             <form onSubmit={submitHandler}>
-                <button type="submit" id="querySubmit">Run Query</button>
+                <Button
+                    type="submit"
+                    id="querySubmit"
+                    color="#61dafb"
+                    primary label="Run Query"/>
             </form>
         </div>
     )
