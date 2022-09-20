@@ -1,6 +1,6 @@
 import React, {forwardRef, useImperativeHandle} from 'react';
 import classes from './Cards.module.css'
-import {DateInput, TextInput} from 'grommet';
+import {TextInput} from 'grommet';
 
 
 const SalesCard = forwardRef((props, ref) => {

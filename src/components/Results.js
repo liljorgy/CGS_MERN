@@ -1,7 +1,7 @@
 import React, {useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation} from "react-router-dom";
-import {DataTable, Heading, Spinner} from 'grommet';
+import {DataTable, Spinner} from 'grommet';
 import HeaderBar from "./UI/HeaderBar";
 import LocationQuery from "./Cards/LocationQuery";
 import SalesQuery from "./Cards/SalesQuery";
@@ -40,7 +40,7 @@ const Results = () => {
                 })
         }
         setIsLoading(false);
-    },[]);
+    },[comps.length]);
 
     useEffect(() => {
         fetchDataHandler();
@@ -67,7 +67,7 @@ const Results = () => {
         var tempArray = []
         startArray.map((result, key) => {
             var tempHistory
-            {counter === 0 ? tempHistory = result.report_history :  tempHistory = result.history}
+            counter === 0 ? tempHistory = result.report_history :  tempHistory = result.history
             if (preFilterDict.state === result.location.state) {
                 tempArray.push({location: result.location, history: tempHistory})
             } else if (preFilterDict.city === result.location.city) {
@@ -116,11 +116,11 @@ const Results = () => {
     // This part creates the final table prepped data
     if (myArray.length > 0) {
         // Define the date format options for parsing the DB data
-        var formatOptions = {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit'
-        };
+        //var formatOptions = {
+        //    day: '2-digit',
+        //    month: '2-digit',
+        //    year: '2-digit'
+        //};
         myArray.map((result, key) => {
             console.log(result.history[0].sale_date.substring(0,10))
             var tempSaleDate = result.history[0].sale_date.substring(0,10)

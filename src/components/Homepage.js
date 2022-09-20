@@ -64,33 +64,33 @@ const Homepage = () => {
                 preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'salePriceLow') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'salePriceHigh') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'saleDateLow') {
                 const fmtDate = formatDate(queryParameters[x].saleDateLow)
-                preFilter = [... preFilter, {saleDateLow: fmtDate}]
+                preFilter = [...preFilter, {saleDateLow: fmtDate}]
             }
             else if (queryKey.toString() === 'saleDateHigh') {
                 const fmtDate = formatDate(queryParameters[x].saleDateHigh)
-                preFilter = [... preFilter, {saleDateHigh: fmtDate}]
+                preFilter = [...preFilter, {saleDateHigh: fmtDate}]
             }
             else if (queryKey.toString() === 'structureType') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'sizeLow') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'sizeHigh') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'unitPriceLow') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'unitPriceHigh') {
-                preFilter = [... preFilter, queryParameters[x]]
+                preFilter = [...preFilter, queryParameters[x]]
             }
         }
         toResults(preFilter);
