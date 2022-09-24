@@ -10,7 +10,7 @@ import {Button} from 'grommet';
 
 const Homepage = () => {
     // Setting query type based on switch selected
-    const [queryType, setQueryType] = useState('improved');
+    const [queryType, setQueryType] = useState('Improved Property');
 
     const locationDetailsHandler = useRef();
     const salesDetailsHandler = useRef();
@@ -25,11 +25,11 @@ const Homepage = () => {
     //const switchQueryType = (event) => {
     const switchQueryType = () => {
         //event.preventDefault()
-        if (queryType === 'improved') {
-            setQueryType('land')
+        if (queryType === 'Improved Property') {
+            setQueryType('Land Sale')
         }
         else {
-            setQueryType('improved')
+            setQueryType('Improved Property')
         }
     };
 
@@ -47,7 +47,8 @@ const Homepage = () => {
         var preFilter = [];
         locationDetailsHandler.current.setQueryParameters(event);
         salesDetailsHandler.current.setSalesQueryParameters(event);
-        queryType === 'improved' ? structureDetailsHandler.current.setStructureQueryParameters(event) : detailsDetailsHandler.current.setDetailsQueryParameters(event)
+        queryType === 'Improved Property' ? structureDetailsHandler.current.setStructureQueryParameters(event) : detailsDetailsHandler.current.setDetailsQueryParameters(event)
+        queryParameters = [...queryParameters, {queryType: queryType} ]
         console.log('Submit Handler: ', queryParameters);
         for (var x in queryParameters) {
             var queryKey = Object.keys(queryParameters[x]);
@@ -92,6 +93,9 @@ const Homepage = () => {
             else if (queryKey.toString() === 'unitPriceHigh') {
                 preFilter = [...preFilter, queryParameters[x]]
             }
+            else if (queryKey.toString() === 'queryType') {
+                preFilter = [...preFilter, queryParameters[x]]
+            }
         }
         toResults(preFilter);
     };
@@ -99,7 +103,7 @@ const Homepage = () => {
     // Redirect onSubmit to results page
     const navigate = useNavigate();
     const toResults = (filter) => {
-        //console.log('To Results: ', filter);
+        console.log('To Results: ', filter);
         navigate('/results', {state: {filter}});
     };
 
@@ -110,8 +114,8 @@ const Homepage = () => {
             <div className={classes.searchPanes_row}>
                 <LocationCard ref={locationDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>
                 <SalesCard ref={salesDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>
-                {(queryType === 'improved') && <StructureCard ref={structureDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
-                {(queryType === 'land') && <DetailsCard ref={detailsDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
+                {(queryType === 'Improved Property') && <StructureCard ref={structureDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
+                {(queryType === 'Land Sale') && <DetailsCard ref={detailsDetailsHandler} onHandleQueryRequest={handleQueryParameters}/>}
             </div>
             <form onSubmit={submitHandler}>
                 <Button

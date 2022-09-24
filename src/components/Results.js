@@ -90,6 +90,8 @@ const Results = () => {
                 tempArray.push({location: result.location ,history: tempHistory})
             } else if (preFilterDict.sizeHigh <= tempHistory[0].size_numeric) {
                 tempArray.push({location: result.location ,history: tempHistory})
+            } else if (preFilterDict.queryType === tempHistory[0].report_type) {
+                tempArray.push({location: result.location, history: tempHistory})
             }
         })
         return tempArray
@@ -115,6 +117,7 @@ const Results = () => {
 
     // This part creates the final table prepped data
     if (myArray.length > 0) {
+        console.log(myArray)
         // Define the date format options for parsing the DB data
         //var formatOptions = {
         //    day: '2-digit',
@@ -122,7 +125,7 @@ const Results = () => {
         //    year: '2-digit'
         //};
         myArray.map((result, key) => {
-            console.log(result.history[0].sale_date.substring(0,10))
+            //console.log(result.history[0].sale_date.substring(0,10))
             var tempSaleDate = result.history[0].sale_date.substring(0,10)
             var tempReportDate = result.history[0].report_written_date.substring(0,10)
             //var tempSaleDate = new Date(result.history[0].sale_date)
