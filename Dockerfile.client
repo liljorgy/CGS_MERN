@@ -1,0 +1,20 @@
+#Dockerfile for React client
+
+# Build react client
+FROM node:18
+
+# Set working directory
+WORKDIR app
+
+COPY package_client.json ./package.json
+COPY package_client-lock.json ./package-lock.json
+
+# Install dependencies
+RUN npm install --silent
+
+# Copy local files to app folder
+COPY . .
+
+EXPOSE 5000
+
+CMD ["npm","start"]

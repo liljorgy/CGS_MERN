@@ -1,0 +1,18 @@
+# Dockerfile for Node Express Backend
+FROM node:18
+
+# Create App directory
+WORKDIR /app
+
+# Install dependencies
+COPY package_node.json ./package.json
+COPY package_node-lock.json ./package-lock.json
+
+RUN npm install --silent
+
+# Copy app source code
+COPY . .
+
+# Exports
+
+CMD ["node","server.js"]

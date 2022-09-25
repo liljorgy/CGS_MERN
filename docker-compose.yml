@@ -1,0 +1,52 @@
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile.node
+    image: myapp-node
+    container_name: myapp-node-server
+    command: node server.js
+    volumes:
+      - /usr/src/app/node_modules
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo
+    volumes: 
+      - data-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+  
+  client:
+    build:
+      context: ./
+      dockerfile: Dockerfile.client
+    image: myapp-client
+    container_name: myapp-react-client
+    command: npm start
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  data-volume:
+  node_modules:
+  web-root:
+    driver: local
