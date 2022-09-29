@@ -31,7 +31,7 @@ const Results = () => {
         setError(null);
         if (comps.length === 0) {
             axios
-                .get('http://localhost:8083/api/comps')
+                .get('http://192.168.1.159:8083/api/comps')
                 .then(res => {
                     setComps(res.data);
                 })
