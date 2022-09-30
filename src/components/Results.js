@@ -53,11 +53,11 @@ const Results = () => {
                 id: myKey,
                 address: rslt.location.street,
                 city: rslt.location.city,
-                saleDate: date1,
-                salePrice: '$' + rslt.history[i].sale_price.toLocaleString('en-US'),
-                reportDate: date2,
+                saleDate: rslt.history[i].sale_date.substr(0,10),
+                salePrice: '$' + rslt.history[i].sale_price.toLocaleString('en-US', {minimumFractionDigits: 2}),
+                reportDate: rslt.history[i].report_written_date.substr(0,10),
                 structureType: rslt.history[i].structure_type,
-                unitPrice: '$' + rslt.history[i].unit_price.toFixed(2),
+                unitPrice: '$' + rslt.history[i].unit_price.toLocaleString('en-US', {minimumFractionDigits: 2}),
                 filename: rslt.history[i].report_attributed_to
             })
         }
@@ -115,23 +115,24 @@ const Results = () => {
         }
     }
 
+    function dynamicSort(property) {
+        var sortOrder = 1;
+        if (property[0] === '-') {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function (a, b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
+    };
+
     // This part creates the final table prepped data
     if (myArray.length > 0) {
-        console.log(myArray)
-        // Define the date format options for parsing the DB data
-        //var formatOptions = {
-        //    day: '2-digit',
-        //    month: '2-digit',
-        //    year: '2-digit'
-        //};
+        //console.log(myArray)
         myArray.map((result, key) => {
-            //console.log(result.history[0].sale_date.substring(0,10))
             var tempSaleDate = result.history[0].sale_date.substring(0,10)
             var tempReportDate = result.history[0].report_written_date.substring(0,10)
-            //var tempSaleDate = new Date(result.history[0].sale_date)
-            //    .toLocaleDateString('en-US', formatOptions);
-            //var tempReportDate = new Date(result.history[0].report_written_date)
-            //    .toLocaleDateString('en-US',formatOptions);
 
             // Define the DataTable column details
             const columnsDefault = [
@@ -145,13 +146,14 @@ const Results = () => {
                 { property: 'filename',      header: 'Filename', size: '100px'}
             ]
             formatForTable(key, result, tempSaleDate, tempReportDate)
+            compsData.reverse(dynamicSort("reportDate"));
+            console.log(compsData)
         content = <div>
             <p>Number of records found: {comps_counter}</p>
             <DataTable
                 columns={columnsDefault}
                 data={compsData}
                 paginate={true}
-                sort={{ property: 'saleDate', direction: "asc" }}
             />
             </div>
             return ;
