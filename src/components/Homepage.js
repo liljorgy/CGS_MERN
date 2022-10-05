@@ -56,9 +56,11 @@ const Homepage = () => {
                 preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'city') {
+                queryParameters[x].city = queryParameters[x].city.toLowerCase()
                 preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'street') {
+                queryParameters[x].street = queryParameters[x].street.toLowerCase()
                 preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'counties' && queryParameters[x].counties.length > 0) {
@@ -79,6 +81,7 @@ const Homepage = () => {
                 preFilter = [...preFilter, {saleDateHigh: fmtDate}]
             }
             else if (queryKey.toString() === 'structureType') {
+                queryParameters[x].structureType = queryParameters[x].structureType.toLowerCase()
                 preFilter = [...preFilter, queryParameters[x]]
             }
             else if (queryKey.toString() === 'sizeLow') {

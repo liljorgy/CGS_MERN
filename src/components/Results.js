@@ -31,7 +31,7 @@ const Results = () => {
         setError(null);
         if (comps.length === 0) {
             axios
-                .get('http://192.168.1.159:8083/api/comps')
+                .get('http://localhost:8083/api/comps')
                 .then(res => {
                     setComps(res.data);
                 })
@@ -70,27 +70,38 @@ const Results = () => {
             counter === 0 ? tempHistory = result.report_history :  tempHistory = result.history
             if (preFilterDict.state === result.location.state) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.city === result.location.city) {
+            }
+            else if (preFilterDict.city === result.location.city.toLowerCase()) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (result.location.street.includes(preFilterDict.street)) {
+            }
+            else if (result.location.street.toLowerCase().includes(preFilterDict.street)) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.counties && preFilterDict.counties.includes(result.location.county)) {
+            }
+            else if (preFilterDict.counties && preFilterDict.counties.includes(result.location.county)) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.salePriceLow <= tempHistory[0].sale_price) {
+            }
+            else if (preFilterDict.salePriceLow <= tempHistory[0].sale_price) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.salePriceHigh >= tempHistory[0].sale_price) {
+            }
+            else if (preFilterDict.salePriceHigh >= tempHistory[0].sale_price) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.saleDateLow <= tempHistory[0].sale_date) {
+            }
+            else if (preFilterDict.saleDateLow <= tempHistory[0].sale_date) {
                 tempArray.push({location: result.location ,history: tempHistory})
-            } else if (preFilterDict.saleDateHigh >= tempHistory[0].sale_date) {
+            }
+            else if (preFilterDict.saleDateHigh >= tempHistory[0].sale_date) {
                 tempArray.push({location: result.location ,history: tempHistory})
-            } else if (preFilterDict.structureType === tempHistory[0].structure_type) {
+            }
+            else if (preFilterDict.structureType === tempHistory[0].structure_type.toLowerCase()) {
                 tempArray.push({location: result.location, history: tempHistory})
-            } else if (preFilterDict.sizeLow >= tempHistory[0].size_numeric) {
+            }
+            else if (preFilterDict.sizeLow >= tempHistory[0].size_numeric) {
                 tempArray.push({location: result.location ,history: tempHistory})
-            } else if (preFilterDict.sizeHigh <= tempHistory[0].size_numeric) {
+            }
+            else if (preFilterDict.sizeHigh <= tempHistory[0].size_numeric) {
                 tempArray.push({location: result.location ,history: tempHistory})
-            } else if (preFilterDict.queryType === tempHistory[0].report_type) {
+            }
+            else if (preFilterDict.queryType === tempHistory[0].report_type) {
                 tempArray.push({location: result.location, history: tempHistory})
             }
         })
@@ -129,7 +140,6 @@ const Results = () => {
 
     // This part creates the final table prepped data
     if (myArray.length > 0) {
-        //console.log(myArray)
         myArray.map((result, key) => {
             var tempSaleDate = result.history[0].sale_date.substring(0,10)
             var tempReportDate = result.history[0].report_written_date.substring(0,10)
@@ -147,7 +157,7 @@ const Results = () => {
             ]
             formatForTable(key, result, tempSaleDate, tempReportDate)
             compsData.reverse(dynamicSort("reportDate"));
-            console.log(compsData)
+            //console.log(compsData)
         content = <div>
             <p>Number of records found: {comps_counter}</p>
             <DataTable
