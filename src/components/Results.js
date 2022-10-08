@@ -68,7 +68,11 @@ const Results = () => {
         startArray.map((result, key) => {
             var tempHistory
             counter === 0 ? tempHistory = result.report_history :  tempHistory = result.history
-            if (preFilterDict.state === result.location.state) {
+            if (result.location.state === "Undefined" && result.location.county === "Undefined" &&
+                result.location.city === "Undefined" && result.location.street === "Undefined") {
+                ;
+            }
+            else if (preFilterDict.state === result.location.state) {
                 tempArray.push({location: result.location, history: tempHistory})
             }
             else if (preFilterDict.city === result.location.city.toLowerCase()) {
@@ -140,6 +144,7 @@ const Results = () => {
 
     // This part creates the final table prepped data
     if (myArray.length > 0) {
+        console.log(myArray)
         myArray.map((result, key) => {
             var tempSaleDate = result.history[0].sale_date.substring(0,10)
             var tempReportDate = result.history[0].report_written_date.substring(0,10)
