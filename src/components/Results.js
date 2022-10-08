@@ -130,21 +130,9 @@ const Results = () => {
         }
     }
 
-    function dynamicSort(property) {
-        var sortOrder = 1;
-        if (property[0] === '-') {
-            sortOrder = -1;
-            property = property.substr(1);
-        }
-        return function (a, b) {
-            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-            return result * sortOrder;
-        }
-    };
-
     // This part creates the final table prepped data
     if (myArray.length > 0) {
-        console.log(myArray)
+        //console.log(myArray)
         myArray.map((result, key) => {
             var tempSaleDate = result.history[0].sale_date.substring(0,10)
             var tempReportDate = result.history[0].report_written_date.substring(0,10)
@@ -161,8 +149,9 @@ const Results = () => {
                 { property: 'filename',      header: 'Filename', size: '100px'}
             ]
             formatForTable(key, result, tempSaleDate, tempReportDate)
-            compsData.reverse(dynamicSort("reportDate"));
-            //console.log(compsData)
+            compsData.sort(function(a,b) {
+                return new Date(b.reportDate) - new Date(a.reportDate);
+            })
         content = <div>
             <p>Number of records found: {comps_counter}</p>
             <DataTable
